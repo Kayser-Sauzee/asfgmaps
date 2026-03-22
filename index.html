@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carte ASF</title>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpLHHJSHbGSNsmFpHS6X0C2AWAL3RvZ4Y"></script>
+  <style>
+    #map { height: 100vh; width: 100%; }
+  </style>
+</head>
+<body>
+
+<div id="map"></div>
+
+<script>
+function initMap() {
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 6,
+    center: { lat: 46.5, lng: 2.5 }
+  });
+
+  // Charger GeoJSON
+  map.data.loadGeoJson("Lineaire_asf.geojson");
+  map.data.loadGeoJson("PR.geojson");
+  map.data.loadGeoJson("Departements.geojson");
+
+  // Style exemple
+  map.data.setStyle(function(feature) {
+    return {
+      strokeColor: "blue",
+      strokeWeight: 2,
+      fillOpacity: 0.2
+    };
+  });
+
+  // Popup info
+  map.data.addListener("click", function(event) {
+    alert(JSON.stringify(event.feature.getProperties()));
+  });
+}
+
+window.onload = initMap;
+</script>
+
+</body>
+</html>
